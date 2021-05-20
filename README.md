@@ -5,7 +5,6 @@
 | 3 | POST   | /potluck              | Creates a potluck using the information sent inside the request body and returns **the newly created potluck object**                          |
 | 4 | POST   | /users              | Creates a user using the information sent inside the request body and returns **the newly created user object**                          |
 | 5 | PUT    | /potluck/:id          | Updates the potluck with the specified id using data from the request body and **returns the modified document**, not the original          |
-                                                         |
 
 ### Database Persistence Helpers
 
