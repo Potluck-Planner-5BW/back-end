@@ -30,7 +30,7 @@
 {
   date: "The potluck date", // Date, required
   time: "The potluck time", // Time, required
-  location: "The potluck location", String, required
+  location: "The potluck location", // String, required
 }
 ```
 
