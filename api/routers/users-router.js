@@ -3,6 +3,7 @@ const { insert, findBy } = require("../models/users-model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const JWT_SECRET = require("../secret")
+const { restrict } = require("../middleware/middleware")
 
 const router = express.Router()
 
@@ -35,6 +36,7 @@ router.post("/users", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
 	try {
 		const { username, password } = req.body
+		
 		const user = await findBy(username)
 		
 		if (!user) {
@@ -45,19 +47,19 @@ router.post("/login", async (req, res, next) => {
 
 		// hash the password again and see if it matches what we have in the database
 		const passwordValid = await bcrypt.compare(password, user.password)
-
+		
 		if (!passwordValid) {
 			return res.status(401).json({
 				message: "Invalid Credentials",
 			})
 		}
 
+		console.log(JWT_SECRET)
 		// generate a new token
 		const token = 
 		jwt.sign({
 			userID: user.id,
 		}, JWT_SECRET)
-
 
 		res.cookie("token", token)
 		res.json({
@@ -68,7 +70,7 @@ router.post("/login", async (req, res, next) => {
 	}
 })
 
-router.get("/logout", async (req, res, next) => {
+router.get("/logout", restrict(), async (req, res, next) => {
 	try {
 		// this will delete the session in the database and try to expire the cookie,
 		// though it's ultimately up to the client if they delete the cookie or not.
