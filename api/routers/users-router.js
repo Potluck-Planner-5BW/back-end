@@ -54,12 +54,12 @@ router.post("/login", async (req, res, next) => {
 			})
 		}
 
-		console.log(JWT_SECRET)
+		console.log(process.env)
 		// generate a new token
 		const token = 
 		jwt.sign({
 			userID: user.id,
-		}, JWT_SECRET)
+		}, process.env.JWT_SECRET)
 
 		res.cookie("token", token)
 		res.json({
